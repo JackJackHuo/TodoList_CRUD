@@ -1,8 +1,9 @@
+// import express
 const express = require('express')
+// import mongoose
 const mongoose = require('mongoose') 
 const app = express()
 const port = 3000
-// import mongoose
 
 
 // connect to mongoDB
