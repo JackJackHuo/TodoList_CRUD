@@ -2,10 +2,12 @@
 const express = require('express')
 // import mongoose
 const mongoose = require('mongoose') 
+// impport express-handlebars
+const exphbs = require('express-handlebars')
 const app = express()
 const port = 3000
 
-
+// MODEL
 // connect to mongoDB
 mongoose.connect('mongodb://localhost/todo-list')
 
@@ -22,13 +24,20 @@ db.once('open' , () => {
   console.log('mongodb connected!')
 }) 
 
+
+// VIEW
+// setting template engine
+app.engine('hbs' , exphbs({defaultLayout: 'main' , extname:'.hbs'}))
+// setting server view engine
+app.set('view engine', 'hbs')
+
+// setting routes
 app.get( '/' , (req , res) => {
-  res.send('This is an express server')
+  res.render('index')
 })
 
+// seting listen port for server
 app.listen( 3000 , () => {
   console.log(`youre now listening http://localhost:${3000}`)
 })
 
-console.log(app)
-console.log(mongoose)
