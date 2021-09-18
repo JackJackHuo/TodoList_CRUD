@@ -4,6 +4,8 @@ const express = require('express')
 const mongoose = require('mongoose') 
 // impport express-handlebars
 const exphbs = require('express-handlebars')
+// import todo model
+const Todo = require('./models/todo')
 const app = express()
 const port = 3000
 
@@ -28,13 +30,17 @@ db.once('open' , () => {
 // VIEW
 // setting template engine
 app.engine('hbs' , exphbs({defaultLayout: 'main' , extname:'.hbs'}))
+
 // setting server view engine
 app.set('view engine', 'hbs')
 
 // setting routes
 app.get( '/' , (req , res) => {
-  res.render('index')
-})
+  Todo.find()
+      .lean()
+      .then(todos => res.render('index', {todos : todos}))
+      .catch(error => console.log(error))
+    })
 
 // seting listen port for server
 app.listen( 3000 , () => {
