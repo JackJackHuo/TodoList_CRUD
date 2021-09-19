@@ -49,6 +49,14 @@ app.get('/todos/new' , (req ,res) => {
   res.render('new')
 })
 
+app.get('/todos/:id' , (req , res) => {
+  const id = req.params.id
+  return Todo.findById(id)
+             .lean()
+             .then(todo => { res.render('detail' , {todo : todo})})
+              .catch(error => console.log(error))
+})
+
 app.post('/todos' , (req ,res) => {
   const name = req.body.name // 從 req.body 拿出表單裡的 name 資料
   // 方法一
@@ -57,7 +65,7 @@ app.post('/todos' , (req ,res) => {
   //            .then(() => { res.redirect('/') })  // 新增完成後導回首頁
   //             .catch(error => console.log(error)) // 錯誤處理
   // 方法二
-  return Todo.create({ name }) // 存入資料庫
+  return Todo.create({ name: name}) // 存入資料庫
       .then(() => { res.redirect('/') })  // 新增完成後導回首頁
       .catch(error => console.log(error)) // 錯誤處理
 })
