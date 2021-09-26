@@ -46,12 +46,12 @@ app.get( '/' , (req , res) => {
              .catch(error => console.log(error)) // 錯誤處理
 })
 
-// render page for creating  new data
+// render page for creating new data
 app.get('/todos/new' , (req ,res) => {
   res.render('new')
 })
 
-// view data specified by id
+// render page detail specified by id
 app.get('/todos/:id' , (req , res) => {
   const id = req.params.id
   return Todo.findById(id)
@@ -60,7 +60,7 @@ app.get('/todos/:id' , (req , res) => {
              .catch(error => console.log(error))
 })
 
-// edit data specified by id
+// render page for editing data specified by id
 app.get('/todos/:id/edit' , (req , res) => {
   const id = req.params.id
   return Todo.findById(id)
@@ -78,7 +78,7 @@ app.post('/todos' , (req ,res) => {
   //            .then(() => { res.redirect('/') })  // 新增完成後導回首頁
   //            .catch(error => console.log(error)) // 錯誤處理
   // 方法二
-  return Todo.create({ name: name}) // 存入資料庫
+  return Todo.create({ name: name }) // 存入資料庫
              .then(() => { res.redirect('/') })  // 新增完成後導回首頁
              .catch(error => console.log(error)) // 錯誤處理
 })
@@ -86,10 +86,11 @@ app.post('/todos' , (req ,res) => {
 // edit
 app.post('/todos/:id/edit', (req, res) => {
   const id = req.params.id
-  const name = req.body.name
+  const {name , isDone} = req.body
   return Todo.findById(id) // 用id查詢資料
     .then(todo => {
       todo.name = name
+      todo.isDone = isDone === 'on'
       return todo.save() // 查詢成功後，修改後重新儲存資料
     })
     .then(() => res.redirect(`/todos/${id}`))
