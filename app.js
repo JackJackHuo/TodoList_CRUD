@@ -6,6 +6,8 @@ const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 // import todo model
 const Todo = require('./models/todo')
+// import method-override
+const methodOverride = require('method-override')
 const app = express()
 const port = 3000
 
@@ -36,6 +38,9 @@ app.set('view engine', 'hbs')
 
 // setting body parser for post request
 app.use(express.urlencoded({extended:true}))
+
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
 
 // setting routes
 // view all data stored via Todo model
@@ -85,9 +90,9 @@ app.post('/todos' , (req ,res) => {
 })
 
 // edit
-app.post('/todos/:id/edit', (req, res) => {
+app.put('/todos/:id', (req, res) => {
   const id = req.params.id
-  const {name , isDone} = req.body
+  const {name , isDone} = req.body //解構賦值 
   return Todo.findById(id) // 用id查詢資料
     .then(todo => {
       todo.name = name
@@ -99,7 +104,7 @@ app.post('/todos/:id/edit', (req, res) => {
 })
 
 // delete
-app.post('/todos/:id/delete', (req, res) => {
+app.delete('/todos/:id', (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
     .then(todo => todo.remove())
