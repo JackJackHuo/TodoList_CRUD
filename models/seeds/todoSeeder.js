@@ -1,18 +1,8 @@
-// import mongoose
-const mongoose = require('mongoose')
+// import mongoose from config and take db from module.export
+const db = require('../../config/mongoose')
 // import todo model
 const Todo = require('../todo')
 
-// connect to mongoDB
-mongoose.connect('mongodb://localhost/todo-list')
-
-//aquire connection status
-const db = mongoose.connection
-
-//setting action for failure scenerio
-db.on('error', () => {
-  console.log('mongodb error!')
-})
 
 //setting action for successful scenerio
 db.once('open', () => {
