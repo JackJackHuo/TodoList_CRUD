@@ -29,7 +29,7 @@ router.get('/:id/edit', (req, res) => {
 })
 
 // create
-router.post('', (req, res) => {
+router.post('/', (req, res) => {
   const name = req.body.name // 從 req.body 拿出表單裡的 name 資料
   // 方法一
   // const todo = new Todo({name}) // 從Todo產生一個實例
