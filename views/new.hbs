@@ -1,9 +1,8 @@
-<form action="/todos" method="post">
-  <div class="form-group">
-  <label for="name">Name</label>  
-  <input type="text" name="name" id="name" placeholder="please type name">
+<form action="/todos" method="post" style="display:inline;">
+  <div class="input-group">
+    <input class="form-control" type="text" placeholder="name" name="name">
+    <div class="input-group-append">
+      <button class="btn btn-success" type="submit">Save</button>
+    </div>
   </div>
-  <button type="submit">Enter</button>
-  <a href="/">Back</a>
 </form>
-
