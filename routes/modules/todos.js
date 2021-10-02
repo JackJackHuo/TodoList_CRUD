@@ -14,18 +14,18 @@ router.get('/new', (req, res) => {
 router.get('/:id', (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
-    .lean()
-    .then(todo => { res.render('detail', { todo: todo }) })
-    .catch(error => console.log(error))
+             .lean()
+             .then(todo => { res.render('detail', { todo: todo }) })
+             .catch(error => console.log(error))
 })
 
 // render page for editing data specified by id
 router.get('/:id/edit', (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
-    .lean()
-    .then(todo => res.render('edit', { todo: todo }))
-    .catch(error => console.log(error))
+             .lean()
+             .then(todo => res.render('edit', { todo: todo }))
+             .catch(error => console.log(error))
 })
 
 // create
@@ -47,22 +47,22 @@ router.put('/:id', (req, res) => {
   const id = req.params.id
   const { name, isDone } = req.body //解構賦值 
   return Todo.findById(id) // 用id查詢資料
-    .then(todo => {
-      todo.name = name
-      todo.isDone = isDone === 'on'
-      return todo.save() // 查詢成功後，修改後重新儲存資料
-    })
-    .then(() => res.redirect(`/todos/${id}`))
-    .catch(error => console.log(error))
+            .then(todo => {
+              todo.name = name
+              todo.isDone = isDone === 'on'
+              return todo.save() // 查詢成功後，修改後重新儲存資料
+            })
+            .then(() => res.redirect(`/todos/${id}`))
+            .catch(error => console.log(error))
 })
 
 // delete
 router.delete('/:id', (req, res) => {
   const id = req.params.id
   return Todo.findById(id)
-    .then(todo => todo.remove())
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
+             .then(todo => todo.remove())
+             .then(() => res.redirect('/'))
+             .catch(error => console.log(error))
 })
 
 // 匯出路由器
