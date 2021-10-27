@@ -4,26 +4,30 @@ const User = require('../../models/user')
 // 引用 passport
 const passport = require('passport')
 
-// users get
+// USERS GET
+// user login page
 router.get('/login' , (req , res) => {
   res.render('login')
 })
+// user register page
 router.get('/register' , (req , res) => {
   res.render('register')
 })
-
+// user logout
 router.get('/logout' , (req, res) => {
+  // req.logout() 是 Passport.js 提供的函式，用來清除 session
   req.logout()
   res.redirect('/users/login')
 })
 
-// users post
-// 加入 middleware，驗證 request 登入狀態
+
+// USERS POST
+// 用 Passport 提供的 authenticate 方法執行認證
 router.post('/login' , passport.authenticate('local' , {
   successRedirect:'/',
   failureRedirect:'/users/login'
 }))
-
+// register user 
 router.post('/register' , (req , res) => {
   const {name, email, password, confirmPassword} = req.body
   User.findOne({email})
