@@ -11,6 +11,12 @@ router.get('/login' , (req , res) => {
 router.get('/register' , (req , res) => {
   res.render('register')
 })
+
+router.get('/logout' , (req, res) => {
+  req.logout()
+  res.redirect('/users/login')
+})
+
 // users post
 // 加入 middleware，驗證 request 登入狀態
 router.post('/login' , passport.authenticate('local' , {
