@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+// import mongoose Schema 建構子
 const Schema = mongoose.Schema
 const userSchema = new Schema({
   name:{
