@@ -4,6 +4,8 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 // import method-override
 const methodOverride = require('method-override')
+// import express-session
+const session = require('express-session')
 
 
 
@@ -22,16 +24,18 @@ const PORT = process.env.PORT || 3000
 
 // setting template engine
 app.engine('hbs' , exphbs({defaultLayout: 'main' , extname:'.hbs'}))
-
 // setting server view engine
 app.set('view engine', 'hbs')
 
+app.use(session({
+  secret:'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 // setting body parser for post request
 app.use(express.urlencoded({extended:true}))
-
 // 設定每一筆請求都會透過 methodOverride 進行前置處理
 app.use(methodOverride('_method'))
-
 // setting routes
 app.use(routes)
 
