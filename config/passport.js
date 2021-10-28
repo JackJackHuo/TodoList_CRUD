@@ -31,7 +31,7 @@ module.exports = app => {
   //Serialize and De-serialize User 設定序列化與反序列化
   // 從資料庫找到完整的user物件，把user id存入session
   passport.serializeUser((user , done) => {
-    done(null , user.id)
+    done(null , user._id)
   })
   // 根據session裡的user id，從資料庫查找完整user物件
   passport.deserializeUser((id , done) => {

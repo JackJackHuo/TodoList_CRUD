@@ -9,6 +9,12 @@ const todoSchema = new Schema({
   isDone:{
   type: Boolean,
   default: false
+  },
+  userId:{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    index: true, //將userId設成索引條件，使用索引來查詢資料能夠增加讀取效能
+    required: true
   }
 })
 

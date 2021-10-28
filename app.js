@@ -43,7 +43,7 @@ usePassport(app)
 // 設定本地變數 res.locals
 app.use((req , res , next) => {
   res.locals.isAuthenticated = req.isAuthenticated
-  res.locals.user = req.user
+  res.locals.user = req.user //使用者登入後，從passport.js裡的De-serialize反序列化取的user
   next()
 })
 // setting routes
