@@ -6,10 +6,10 @@ const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 // import express-session
 const session = require('express-session')
-// 載入設定檔，要寫在 express-session 以後
+// 載入設定檔(要寫在 express-session 以後)
 const usePassport = require('./config/passport')
-
-
+// import connect-flash
+const flash = require('connect-flash')
 
 // import express routes
 //可以省略/index，因為require('資料夾')時，node會自動抓資料夾內名叫index的js檔(預設為index)
@@ -40,10 +40,14 @@ app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
 // 呼叫 Passport 函式並傳入 app，這條要寫在路由之前
 usePassport(app)
-// 設定本地變數 res.locals
+// 掛載flash套件
+app.use(flash())
+// 設定本地變數 res.locals，放在locals的變數可以直接在view用{{}}引用
 app.use((req , res , next) => {
   res.locals.isAuthenticated = req.isAuthenticated
   res.locals.user = req.user //使用者登入後，從passport.js裡的De-serialize反序列化取的user
+  res.locals.success_msg = req.flash('success_msg') // 設定 success_msg 訊息
+  res.locals.warning_msg = req.flash('warning_msg') // 設定 warning_msg 訊息
   next()
 })
 // setting routes
