@@ -6,6 +6,8 @@ const passportLocal = require('passport-local')
 const LocalStrategy = passportLocal.Strategy
 // import user model
 const User = require('../models/user')
+// 載入bcrypt套件
+const bcrypt = require('bcryptjs')
 
 module.exports = app => {
 
@@ -25,10 +27,12 @@ module.exports = app => {
           if(!user){
             return done(null ,false, {message: 'Email not registered'})
           }
-          if(user.password !== password){
-            return done(null , false , { message: 'Email or Password incorrect' })
-          }
-          return done(null , user)
+          return bcrypt.compare( password , user.password).then(isMatch => {
+            if(!isMatch){
+              return done(null, false, { message: 'Email or Password incorrect' })
+            }
+            return done(null , user)
+          })
         })
         .catch( err => done(err , false))
   }))
