@@ -10,6 +10,10 @@ const session = require('express-session')
 const usePassport = require('./config/passport')
 // import connect-flash
 const flash = require('connect-flash')
+// production 模式下，將.env內的變數載入環境變數process.env使用
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 // import express routes
 //可以省略/index，因為require('資料夾')時，node會自動抓資料夾內名叫index的js檔(預設為index)
@@ -21,7 +25,7 @@ require('./config/mongoose')
 const app = express()
 // 如果在 Heroku 環境則使用 process.env.PORT
 // 否則為本地環境，使用 3000 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT
 
 
 // setting template engine
@@ -30,7 +34,7 @@ app.engine('hbs' , exphbs({defaultLayout: 'main' , extname:'.hbs'}))
 app.set('view engine', 'hbs')
 // setting session params
 app.use(session({
-  secret:'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))

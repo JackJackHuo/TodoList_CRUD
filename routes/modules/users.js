@@ -58,18 +58,19 @@ router.post('/register' , (req , res) => {
         if(user){
           errors.push({ message: '這個 Email 已經註冊過了。' })
           res.render('register', { //前面若加return，下面可以不必寫else(會直接跳出並執行res.render)
+            errors,
             name,
             email,
             password,
             confirmPassword
           })
         }else{
-          return bcrypt
+          bcrypt
           .genSalt(10) // 產生「鹽」，並設定複雜度係數為 10
           .then(salt => bcrypt.hash(password, salt)) // 為使用者密碼「加鹽」，產生雜湊值
           .then( hash => {
             // method 1
-            return User.create({
+            User.create({
               name,
               email,
               password: hash // 用雜湊值取代原本的使用者密碼
@@ -85,9 +86,7 @@ router.post('/register' , (req , res) => {
           // })
           // newUser.save()
           // .then(() => res.redirect('/'))
-          // .catch( err => console.log(err))
-          
-          
+          // .catch( err => console.log(err))               
         }
       })
 })

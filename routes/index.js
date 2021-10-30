@@ -7,11 +7,15 @@ const home = require('./modules/home')
 const todos = require('./modules/todos')
 // 引入 users 模組程式碼
 const users = require('./modules/users')
+// 引入 auth 模組程式碼
+const auth = require('./modules/auth')
 // 引入 middleware file中的authenticator middleware程式碼
 const {authenticator} = require('../middleware/auth')
 
 
 
+// 將網址結構符合 /auth 字串開頭的 request 導向 auth 模組
+router.use('/auth', auth)
 // 將網址結構符合 /users 字串開頭的 request 導向 users 模組
 router.use('/users' , users)
 // 將網址結構符合 /todos 字串開頭的 request 導向 todos 模組 
