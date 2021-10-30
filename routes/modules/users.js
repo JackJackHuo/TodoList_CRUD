@@ -19,7 +19,6 @@ router.get('/register' , (req , res) => {
 })
 // user logout
 router.get('/logout' , (req, res) => {
-  console.log(req)
   // req.logout() 是 Passport.js 提供的函式，用來清除 session
   req.logout()
   req.flash('success_msg', '你已經成功登出。')
